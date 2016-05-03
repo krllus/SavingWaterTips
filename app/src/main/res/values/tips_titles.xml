@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_tip_01">Boca aberta, torneira fechada</string>
+    <string name="title_tip_02">Nada de pinga-pinga</string>
+    <string name="title_tip_03">Não dê furos</string>
+    <string name="title_tip_04">Coloque camisinha na torneira</string>
+    <string name="title_tip_05">Limpe antes de lavar</string>
+    <string name="title_tip_06">Banho de gato</string>
+    <string name="title_tip_07">Só na dança da vassoura</string>
+    <string name="title_tip_08">Economia no trono</string>
+    <string name="title_tip_09">Xixi no banho, sim</string>
+    <string name="title_tip_10">Cuidado com a agua que você não vê</string>
+    <string name="title_tip_11">Lixo no lixo</string>
+    <string name="title_tip_12">Cadê a piscina?</string>
+    <string name="title_tip_13">Regue para crescer</string>
+    <string name="title_tip_14">Carro não precisa de banho toda hora</string>
+    <string name="title_tip_15">Lavar roupa todo dia? Que agonia!</string>
+
+    <string-array name="title_tips">
+        <item>Boca aberta, torneira fechada</item>
+        <item>Nada de pinga-pinga</item>
+        <item>Não dê furos</item>
+        <item>Coloque camisinha na torneira</item>
+        <item>Limpe antes de lavar</item>
+        <item>Banho de gato</item>
+        <item>Só na dança da vassoura</item>
+        <item>Economia no trono</item>
+        <item>Xixi no banho, sim</item>
+        <item>Cuidado com a agua que você não vê</item>
+        <item>Lixo no lixo</item>
+        <item>Cadê a piscina?</item>
+        <item>Regue para crescer</item>
+        <item>Carro não precisa de banho toda hora</item>
+        <item>Lavar roupa todo dia? Que agonia!</item>
+    </string-array>
+
+</resources>

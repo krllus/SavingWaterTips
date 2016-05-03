@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <gyndroids.com.savingwatertips.adapter.SquareImageView
+        android:id="@+id/gridview_item_picture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/transition_grid_image" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/scrim" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:minHeight="?attr/listPreferredItemHeight"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="?attr/listPreferredItemPaddingRight"
+            android:layout_marginLeft="?attr/listPreferredItemPaddingLeft"
+            android:layout_marginRight="?attr/listPreferredItemPaddingRight"
+            android:layout_marginStart="?attr/listPreferredItemPaddingLeft"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/gridview_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

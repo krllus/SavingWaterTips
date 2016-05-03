@@ -1,0 +1,150 @@
+package gyndroids.com.savingwatertips.ui.fragments;
+
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import gyndroids.com.savingwatertips.R;
+import gyndroids.com.savingwatertips.interfaces.InterfaceGridItemSelected;
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FragmentMain extends Fragment {
+
+    private View mView;
+    private InterfaceGridItemSelected mInterfaceGridItemSelected;
+
+    public FragmentMain() {
+        // Required empty public constructor
+    }
+
+    public static FragmentMain newInstance() {
+        return new FragmentMain();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity activity = (Activity) context;
+
+        try {
+            mInterfaceGridItemSelected = (InterfaceGridItemSelected) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement InterfaceDrawer");
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        GridView gridView = (GridView) mView.findViewById(R.id.main_gridview);
+        gridView.setAdapter(new MyAdapter(getContext()));
+
+        gridView.setOnItemClickListener((parent, v, position, id) -> {
+            Object temp = gridView.getItemAtPosition(position);
+            Log.d("FragmentMain", temp.getClass().toString());
+
+
+
+            mInterfaceGridItemSelected.onGridItemSelected(position, v);
+        });
+
+
+        return mView;
+    }
+
+    private class MyAdapter extends BaseAdapter {
+        private List<Item> items = new ArrayList<>();
+        private LayoutInflater inflater;
+
+        public MyAdapter(Context context) {
+            inflater = LayoutInflater.from(context);
+
+            items.add(new Item(getString(R.string.title_tip_01), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_02), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_03), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_04), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_05), R.drawable.water_cup));
+
+            items.add(new Item(getString(R.string.title_tip_06), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_07), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_08), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_09), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_10), R.drawable.water_cup));
+
+            items.add(new Item(getString(R.string.title_tip_11), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_12), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_13), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_14), R.drawable.water_cup));
+            items.add(new Item(getString(R.string.title_tip_15), R.drawable.water_cup));
+        }
+
+        @Override
+        public int getCount() {
+            return items.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return items.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return items.get(i).drawableId;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View v = view;
+            ImageView picture;
+            TextView name;
+
+            if (v == null) {
+                v = inflater.inflate(R.layout.gridview_item, viewGroup, false);
+                v.setTag(R.id.gridview_item_picture, v.findViewById(R.id.gridview_item_picture));
+                v.setTag(R.id.gridview_item_title, v.findViewById(R.id.gridview_item_title));
+            }
+
+            picture = (ImageView) v.getTag(R.id.gridview_item_picture);
+            name = (TextView) v.getTag(R.id.gridview_item_title);
+
+            Item item = (Item) getItem(i);
+
+            picture.setImageResource(item.drawableId);
+            name.setText(item.name);
+
+            return v;
+        }
+
+        private class Item {
+            final String name;
+            final int drawableId;
+
+            Item(String name, int drawableId) {
+                this.name = name;
+                this.drawableId = drawableId;
+            }
+        }
+    }
+
+}
