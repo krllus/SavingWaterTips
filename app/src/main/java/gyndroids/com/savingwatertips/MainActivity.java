@@ -2,6 +2,7 @@ package gyndroids.com.savingwatertips;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,23 +15,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import gyndroids.com.savingwatertips.interfaces.InterfaceGridItemSelected;
-import gyndroids.com.savingwatertips.interfaces.InterfaceToolbar;
-import gyndroids.com.savingwatertips.ui.fragments.FragmentCronometer;
 import gyndroids.com.savingwatertips.ui.fragments.FragmentMain;
+import gyndroids.com.savingwatertips.utils.Configs;
 
-public class MainActivity extends AppCompatActivity implements InterfaceToolbar, InterfaceGridItemSelected {
+public class MainActivity extends AppCompatActivity implements InterfaceGridItemSelected {
 
     private static String FRAGMENT_TAG_STRING = "com.gyndroids.savingwater.FRAGMENT_TAG";
 
-    // refer to the app components
-    // navigation drawer, toolbar and so on.
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationDrawer;
-    private ActionBarDrawerToggle mDrawerToogle;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,34 +42,88 @@ public class MainActivity extends AppCompatActivity implements InterfaceToolbar,
 
         // set up the drawer layout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        mDrawerToogle = setUpDrawerToggle();
-        mDrawerLayout.setDrawerListener(mDrawerToogle);
+        mDrawerToggle = setUpDrawerToggle();
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         setUpNavigationDrawer();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return mDrawerToogle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        //TODO remove this part of the code before releasing
+        switch (item.getItemId()) {
+            case R.id.action_reset:
+                Log.d("MainActivity", "Reset");
+
+                SharedPreferences preferences = getSharedPreferences(Configs.APP_IDENTIFICATION, MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean(Configs.PREFERENCE_FIRST_RUN, true);
+                editor.apply();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToogle.syncState();
+        mDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToogle.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    /**
+     * Implementation of the InterfaceGridItemSelected
+     * create a intent, add some arguments, the position of the item selected, launch the intent
+     * if the version of the OS running is greater then API 21(Lollipop), add a custom animation
+     * between the views.
+     *
+     * @param position
+     */
     @Override
-    public void setMainActivityToolBar(Toolbar toolbar) {
-        setSupportActionBar(toolbar);
+    public void onGridItemSelected(int position) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(DetailActivity.PARAM_POSITION, position);
+        intent.putExtras(bundle);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            ImageView sharedView = (ImageView) findViewById(R.id.gridview_item_picture);
+            String transitionName = getResources().getString(R.string.gridimage_transition);
+
+            bundle = ActivityOptions
+                    .makeSceneTransitionAnimation(
+                            this /*,
+                            sharedView,
+                            transitionName*/)
+                    .toBundle();
+        }
+        startActivity(intent, bundle);
     }
 
+    /**
+     * setup the toolbar and actionbar
+     */
     private void setUpToolbar() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolbar);
@@ -78,16 +133,31 @@ public class MainActivity extends AppCompatActivity implements InterfaceToolbar,
         }
     }
 
+    /**
+     * setup the navigation drawer
+     * the header of the drawer is defined in the drawer_header.xml file.
+     * the content of the drawer is defined in the menu_drawer.xml file.
+     */
     private void setUpNavigationDrawer() {
         mNavigationDrawer = (NavigationView) findViewById(R.id.main_nav_view);
         if (mNavigationDrawer != null)
             setUpDrawerContent();
     }
 
+    /**
+     * setup the DrawerToggle
+     * make use of a helper for the hamburger menu animation and state control
+     *
+     * @return
+     */
     private ActionBarDrawerToggle setUpDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
     }
 
+    /**
+     * Setup the content for the navigation drawer
+     * Perform a select in the first item of the navigation drawer.
+     */
     private void setUpDrawerContent() {
         mNavigationDrawer.setNavigationItemSelectedListener(
                 menuItem -> {
@@ -96,29 +166,33 @@ public class MainActivity extends AppCompatActivity implements InterfaceToolbar,
                 });
 
         // select Default Item
-        mNavigationDrawer.getMenu().performIdentifierAction(R.id.drawer_grid_tips, 0);
+        mNavigationDrawer.getMenu().performIdentifierAction(R.id.drawer_main, 0);
 
         // http://stackoverflow.com/questions/33194594/navigationview-get-find-header-layout/33194816
         View mHeaderView = mNavigationDrawer.inflateHeaderView(R.layout.drawer_header);
         //mHeaderView = mNavigationDrawer.getHeaderView(0);
     }
 
+    /**
+     * perform an action according with the selected menu item
+     *
+     * @param menuItem
+     */
     private void selectDrawerItem(MenuItem menuItem) {
-
         Class fragmentClass;
         switch (menuItem.getItemId()) {
-            case R.id.drawer_grid_tips:
+            // Introduction Activity
+            case R.id.drawer_motivation:
+                Intent intent = new Intent(this, IntroductionActivity.class);
+                startActivity(intent);
+                return;
+
+            // FragmentMain
+            case R.id.drawer_main:
                 fragmentClass = FragmentMain.class;
                 break;
 
-            case R.id.drawer_cronometer:
-                fragmentClass = FragmentCronometer.class;
-                break;
-            // configs
-            case R.id.drawer_settings:
-                fragmentClass = FragmentCronometer.class;
-                break;
-            // default
+            // default - FragmentMain
             default:
                 fragmentClass = FragmentMain.class;
                 break;
@@ -127,6 +201,8 @@ public class MainActivity extends AppCompatActivity implements InterfaceToolbar,
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
 
+        // instantiate a new fragment using the factory pattern
+        // if not possible, launches an error.
         try {
             setTitle(menuItem.getTitle());
             fragment = (Fragment) fragmentClass.newInstance();
@@ -145,26 +221,5 @@ public class MainActivity extends AppCompatActivity implements InterfaceToolbar,
         setTitle(menuItem.getTitle());
         mDrawerLayout.closeDrawers();
 
-    }
-
-
-    @Override
-    public void onGridItemSelected(int position, View sharedView) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt(DetailActivity.PARAM_POSITION, position);
-        intent.putExtras(bundle);
-
-        Log.d("MainActivity", sharedView.getClass().toString());
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            bundle = ActivityOptions
-                    .makeSceneTransitionAnimation(
-                            this /*,
-                            sharedView,
-                            sharedView.getTransitionName()*/)
-                    .toBundle();
-        }
-        startActivity(intent, bundle);
     }
 }

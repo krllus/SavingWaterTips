@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import gyndroids.com.savingwatertips.utils.Configs;
 
@@ -23,28 +22,28 @@ public class SplashScreen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        /**
+         * Create a preference to check if it's the first run of the application
+         */
         boolean firstRun = sharedPreferences.getBoolean(Configs.PREFERENCE_FIRST_RUN, true);
 
-        if (firstRun) {
+        Intent mIntent;
 
-            Log.w("Splash Screen", "First Run!");
+        //just to test if this part of the code is working.
+        if (Configs.isTesting)
+            firstRun = true;
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(Configs.PREFERENCE_FIRST_RUN, false);
-            editor.apply();
+        /**
+         * check if its the first time the program is running.
+         * if is, launch IntroductionActivity
+         * if isn't launch MainActivity
+         */
+        if (firstRun)
+            mIntent = new Intent(this, IntroductionActivity.class);
+        else
+            mIntent = new Intent(this, MainActivity.class);
 
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-
-        } else {
-            Log.w("Splash Screen", "Not the first Run!");
-
-            /* TODO pass an argument to the MainActivity, indicating to open the "MotivationScreen".
-             */
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        startActivity(mIntent);
+        finish();
     }
 }

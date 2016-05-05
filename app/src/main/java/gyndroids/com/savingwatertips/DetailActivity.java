@@ -1,10 +1,13 @@
 package gyndroids.com.savingwatertips;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private TextView mTextDetails;
     private ImageView mImageBackdrop;
+    private FloatingActionButton mFab;
     private int mPosition;
 
     @Override
@@ -27,9 +31,14 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        setUpToolbar();
+        // gets the position passed through bundle
+        Bundle bundle = getIntent().getExtras();
+        mPosition = bundle.getInt(PARAM_POSITION);
 
         loadViews();
+
+        setUpToolbar();
+        setUpFab();
 
         //transition if version is lolipop+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -46,19 +55,25 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void loadViews() {
-        mTextDetails = (TextView) findViewById(R.id.details_text);
-        mImageBackdrop = (ImageView) findViewById(R.id.details_backdrop);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
 
-        loadBackdrop();
         loadContent();
     }
 
+    /**
+     * Load the views from the layout file
+     */
+    private void loadViews() {
+        mTextDetails = (TextView) findViewById(R.id.details_text);
+        mImageBackdrop = (ImageView) findViewById(R.id.details_backdrop);
+        mFab = (FloatingActionButton) findViewById(R.id.details_fab_share);
+    }
+
+    /**
+     * setups the toolbar, actionbar and collapsing toolbar.
+     */
     private void setUpToolbar() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.details_toolbar);
         CollapsingToolbarLayout mCollapsingToolbar =
@@ -71,34 +86,41 @@ public class DetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-
-        Bundle bundle = getIntent().getExtras();
-        mPosition = bundle.getInt(PARAM_POSITION);
-
         if (mCollapsingToolbar != null) {
             mCollapsingToolbar.setTitle(getTitleByPosition());
         }
     }
 
-    private void loadBackdrop() {
+    /**
+     * setup the Floating Action Button
+     */
+    private void setUpFab() {
+        Log.d("DetailActivity", "SetUpFab");
+        mFab.setOnClickListener(v -> {
+            Log.d("DetailActivity", "Fab Clicked");
+            shareContent();
+        });
+    }
 
+    /**
+     * Load the content inside the recipients
+     */
+    private void loadContent() {
+        // load the image inside the imageView
         Glide.with(this)
-                .load(R.drawable.water_cup)
+                .load(getImageByPosition())
                 .centerCrop()
                 .into(mImageBackdrop);
+
+        // load the content inside the textView
+        mTextDetails.setText(getContentByPosition());
     }
 
-    private void loadContent() {
-
-        String content = getTextByPosition();
-
-        if (mTextDetails != null) {
-            mTextDetails.setText(content);
-        }
-
-    }
-
-    private String getTextByPosition() {
+    /**
+     * Load the contents from the string file and
+     * return the content according with the mPosition
+     */
+    private String getContentByPosition() {
 
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(getString(R.string.text_tip_01));
@@ -122,6 +144,10 @@ public class DetailActivity extends AppCompatActivity {
         return contentList.get(mPosition);
     }
 
+    /**
+     * Load the titles from the string file and
+     * return the title according with the mPosition
+     */
     private CharSequence getTitleByPosition() {
 
         String[] titleArray = getResources().getStringArray(R.array.title_tips);
@@ -129,5 +155,31 @@ public class DetailActivity extends AppCompatActivity {
 
         return titleList.get(mPosition);
     }
+
+    /**
+     * Returns the id of the image that are chosen by position
+     * TODO finish this method
+     */
+    public int getImageByPosition() {
+
+        switch (mPosition) {
+            default:
+                return R.drawable.water_cup;
+        }
+
+    }
+
+    /**
+     * Create an intent to share content with any app that allow text/plain as input.
+     */
+    private void shareContent() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, getTitleByPosition());
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getContentByPosition());
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.action_share)));
+    }
+
 
 }

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +31,12 @@ public class FragmentMain extends Fragment {
         // Required empty public constructor
     }
 
+    // factory pattern to create a new instance of this fragment.
     public static FragmentMain newInstance() {
         return new FragmentMain();
     }
 
+    //
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -60,12 +61,7 @@ public class FragmentMain extends Fragment {
         gridView.setAdapter(new MyAdapter(getContext()));
 
         gridView.setOnItemClickListener((parent, v, position, id) -> {
-            Object temp = gridView.getItemAtPosition(position);
-            Log.d("FragmentMain", temp.getClass().toString());
-
-
-
-            mInterfaceGridItemSelected.onGridItemSelected(position, v);
+            mInterfaceGridItemSelected.onGridItemSelected(position);
         });
 
 

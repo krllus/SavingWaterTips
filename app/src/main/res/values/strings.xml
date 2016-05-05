@@ -1,19 +1,22 @@
 <resources>
-    <string name="app_name">Saving Water Tips</string>
+    <string name="app_name">Dicas Para Economizar Água</string>
 
-    <string name="drawer_settings">Settings</string>
-    <string name="drawer_open">Open Navigation</string>
-    <string name="drawer_close">Close Navigation</string>
+    <string name="drawer_settings">Configurações</string>
+    <string name="drawer_open">Abrir Navegação</string>
+    <string name="drawer_close">Fechar Navegação</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_reset">Resetar</string>
 
-    <string name="activity_tip">Tips</string>
-    <string name="activity_tip_image_description">Image that show some kind of water</string>
+    <string name="title_activity_main">Dicas</string>
+    <string name="title_activity_details">Detalhes</string>
+    <string name="title_activity_introduction">Motivação</string>
 
-    <string name="fragment_grid_tips">Tips</string>
-    <string name="fragment_chronometer">Chronometer</string>
+    <string name="details_image_description">Imagem que mostra um copo de água</string>
 
-    <string name="activity_introduction">Motivação</string>
+    <string name="introduction_btn_prev">Anterior</string>
+    <string name="introduction_btn_next">Próximo</string>
+    <string name="introduction_btn_continue">Continuar</string>
     <string name="introduction_paragraph_01">Falar de economia de água em um planeta onde 75% da superfície é coberta pelo recurso hídrico parece papo de "ecochato", mas não é. O Planeta Água, como é conhecida a Terra, pode sim secar e esta realidade está mais perto de acontecer a cada dia, por conta do desperdício e da contaminação da água.</string>
     <string name="introduction_paragraph_02">A ONU já alertou: se não houver mudanças de hábitos no curto prazo, até 2030 quase metade da população global terá problemas de abastecimento - sem contar as 768 milhões de pessoas que já não possuem acesso à água potável e podem ficar em situação ainda mais complicada.</string>
     <string name="introduction_paragraph_03">O desperdício começa na própria rede de distribuição, por conta de problemas como vazamentos e "gatos" - sabia que, no Brasil, a cada 100 litros de água coletados, apenas 64 chegam ao seu destino? -, e se agrava quando o recurso entra na casa dos brasileiros.</string>
@@ -28,6 +31,8 @@
     <string name="font_03">Instituto Akatu pelo Consumo Consciente</string>
     <string name="font_04">Sabesp</string>
 
-    <string name="transition_grid_image">griditem_image</string>
+    <string name="gridimage_transition">griditem_image</string>
+    <string name="action_share">Enviar para...</string>
+
 
 </resources>

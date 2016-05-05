@@ -10,26 +10,31 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.Home" />
-
-        <activity
-            android:name=".DetailActivity"
-            android:label="@string/activity_tip"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-
-        <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.Home" />
+
+        <activity
+            android:name=".IntroductionActivity"
+            android:label="@string/title_activity_introduction"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".DetailActivity"
+            android:label="@string/title_activity_details"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 
