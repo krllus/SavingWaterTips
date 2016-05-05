@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import gyndroids.com.savingwatertips.utils.Configs;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -39,20 +37,6 @@ public class DetailActivity extends AppCompatActivity {
 
         setUpToolbar();
         setUpFab();
-
-        //transition if version is lolipop+
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            /*
-            Slide slide = new Slide(Gravity.BOTTOM);
-            slide.addTarget(R.id.details_nestedscrollview);
-            slide.setInterpolator(
-                    AnimationUtils.loadInterpolator(this,
-                            android.R.interpolator.linear_out_slow_in));
-            slide.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
-            getWindow().setEnterTransition(slide);
-            */
-        }
-
     }
 
     @Override
@@ -87,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         if (mCollapsingToolbar != null) {
-            mCollapsingToolbar.setTitle(getTitleByPosition());
+            mCollapsingToolbar.setTitle(getString(Configs.getTitleResourceIdByPosition(mPosition)));
         }
     }
 
@@ -108,66 +92,14 @@ public class DetailActivity extends AppCompatActivity {
     private void loadContent() {
         // load the image inside the imageView
         Glide.with(this)
-                .load(getImageByPosition())
+                .load(Configs.getImageResourceByPosition(mPosition))
                 .centerCrop()
                 .into(mImageBackdrop);
 
         // load the content inside the textView
-        mTextDetails.setText(getContentByPosition());
+        mTextDetails.setText(getString(Configs.getContentIdByPosition(mPosition)));
     }
 
-    /**
-     * Load the contents from the string file and
-     * return the content according with the mPosition
-     */
-    private String getContentByPosition() {
-
-        ArrayList<String> contentList = new ArrayList<>();
-        contentList.add(getString(R.string.text_tip_01));
-        contentList.add(getString(R.string.text_tip_02));
-        contentList.add(getString(R.string.text_tip_03));
-        contentList.add(getString(R.string.text_tip_04));
-        contentList.add(getString(R.string.text_tip_05));
-
-        contentList.add(getString(R.string.text_tip_06));
-        contentList.add(getString(R.string.text_tip_07));
-        contentList.add(getString(R.string.text_tip_08));
-        contentList.add(getString(R.string.text_tip_09));
-        contentList.add(getString(R.string.text_tip_10));
-
-        contentList.add(getString(R.string.text_tip_11));
-        contentList.add(getString(R.string.text_tip_12));
-        contentList.add(getString(R.string.text_tip_13));
-        contentList.add(getString(R.string.text_tip_14));
-        contentList.add(getString(R.string.text_tip_15));
-
-        return contentList.get(mPosition);
-    }
-
-    /**
-     * Load the titles from the string file and
-     * return the title according with the mPosition
-     */
-    private CharSequence getTitleByPosition() {
-
-        String[] titleArray = getResources().getStringArray(R.array.title_tips);
-        List<String> titleList = Arrays.asList(titleArray);
-
-        return titleList.get(mPosition);
-    }
-
-    /**
-     * Returns the id of the image that are chosen by position
-     * TODO finish this method
-     */
-    public int getImageByPosition() {
-
-        switch (mPosition) {
-            default:
-                return R.drawable.water_cup;
-        }
-
-    }
 
     /**
      * Create an intent to share content with any app that allow text/plain as input.
@@ -175,8 +107,10 @@ public class DetailActivity extends AppCompatActivity {
     private void shareContent() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, getTitleByPosition());
-        sendIntent.putExtra(Intent.EXTRA_TEXT, getContentByPosition());
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(
+                Configs.getTitleResourceIdByPosition(mPosition)));
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(
+                Configs.getContentIdByPosition(mPosition)));
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.action_share)));
     }

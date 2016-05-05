@@ -18,6 +18,7 @@ import java.util.List;
 
 import gyndroids.com.savingwatertips.R;
 import gyndroids.com.savingwatertips.interfaces.InterfaceGridItemSelected;
+import gyndroids.com.savingwatertips.utils.Configs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,9 +61,8 @@ public class FragmentMain extends Fragment {
         GridView gridView = (GridView) mView.findViewById(R.id.main_gridview);
         gridView.setAdapter(new MyAdapter(getContext()));
 
-        gridView.setOnItemClickListener((parent, v, position, id) -> {
-            mInterfaceGridItemSelected.onGridItemSelected(position);
-        });
+        gridView.setOnItemClickListener((parent, v, position, id) ->
+                mInterfaceGridItemSelected.onGridItemSelected(position));
 
 
         return mView;
@@ -75,23 +75,11 @@ public class FragmentMain extends Fragment {
         public MyAdapter(Context context) {
             inflater = LayoutInflater.from(context);
 
-            items.add(new Item(getString(R.string.title_tip_01), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_02), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_03), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_04), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_05), R.drawable.water_cup));
-
-            items.add(new Item(getString(R.string.title_tip_06), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_07), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_08), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_09), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_10), R.drawable.water_cup));
-
-            items.add(new Item(getString(R.string.title_tip_11), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_12), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_13), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_14), R.drawable.water_cup));
-            items.add(new Item(getString(R.string.title_tip_15), R.drawable.water_cup));
+            for (int i = 0; i < 15; i++) {
+                items.add(new Item(getString(
+                        Configs.getTitleResourceIdByPosition(i)),
+                        Configs.getImageThumbResourceByPosition(i)));
+            }
         }
 
         @Override

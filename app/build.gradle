@@ -10,6 +10,11 @@ android {
         javaMaxHeapSize "2g"
     }
 
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId "gyndroids.com.savingwatertips"
         minSdkVersion 16
@@ -23,14 +28,14 @@ android {
 
     }
     buildTypes {
+
+        debug {
+            debuggable true
+        }
+
         release {
             minifyEnabled false
         }
-    }
-
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 

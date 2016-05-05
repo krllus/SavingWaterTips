@@ -2,7 +2,6 @@ package gyndroids.com.savingwatertips;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,16 +13,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import gyndroids.com.savingwatertips.interfaces.InterfaceGridItemSelected;
 import gyndroids.com.savingwatertips.ui.fragments.FragmentMain;
-import gyndroids.com.savingwatertips.utils.Configs;
 
 public class MainActivity extends AppCompatActivity implements InterfaceGridItemSelected {
 
@@ -50,32 +45,8 @@ public class MainActivity extends AppCompatActivity implements InterfaceGridItem
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        //TODO remove this part of the code before releasing
-        switch (item.getItemId()) {
-            case R.id.action_reset:
-                Log.d("MainActivity", "Reset");
-
-                SharedPreferences preferences = getSharedPreferences(Configs.APP_IDENTIFICATION, MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean(Configs.PREFERENCE_FIRST_RUN, true);
-                editor.apply();
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 
     }
 
@@ -97,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceGridItem
      * if the version of the OS running is greater then API 21(Lollipop), add a custom animation
      * between the views.
      *
-     * @param position
+     * @param position requested position
      */
     @Override
     public void onGridItemSelected(int position) {
@@ -148,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceGridItem
      * setup the DrawerToggle
      * make use of a helper for the hamburger menu animation and state control
      *
-     * @return
+     * @return action bar toggle item
      */
     private ActionBarDrawerToggle setUpDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
@@ -176,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements InterfaceGridItem
     /**
      * perform an action according with the selected menu item
      *
-     * @param menuItem
+     * @param menuItem menu item from the xml file menu_drawer
      */
     private void selectDrawerItem(MenuItem menuItem) {
         Class fragmentClass;
