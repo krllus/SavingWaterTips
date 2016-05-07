@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import gyndroids.com.savingwatertips.interfaces.InterfaceGridItemSelected;
+import gyndroids.com.savingwatertips.ui.fragments.FragmentCredits;
 import gyndroids.com.savingwatertips.ui.fragments.FragmentMain;
 
 public class MainActivity extends AppCompatActivity implements InterfaceGridItemSelected {
@@ -161,6 +162,11 @@ public class MainActivity extends AppCompatActivity implements InterfaceGridItem
             // FragmentMain
             case R.id.drawer_main:
                 fragmentClass = FragmentMain.class;
+                break;
+
+            // FragmentMain
+            case R.id.drawer_credits:
+                fragmentClass = FragmentCredits.class;
                 break;
 
             // default - FragmentMain

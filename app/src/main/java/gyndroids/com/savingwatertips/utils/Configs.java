@@ -35,6 +35,7 @@ public class Configs {
                 return R.drawable.water_03;
             case 4:
                 return R.drawable.water_04;
+
             case 5:
                 return R.drawable.water_05;
             case 6:
@@ -45,16 +46,18 @@ public class Configs {
                 return R.drawable.water_08;
             case 9:
                 return R.drawable.water_09;
+
             case 10:
                 return R.drawable.water_10;
-            case 12:
+            case 11:
                 return R.drawable.water_11;
-            case 13:
+            case 12:
                 return R.drawable.water_12;
-            case 14:
+            case 13:
                 return R.drawable.water_13;
-            case 15:
+            case 14:
                 return R.drawable.water_14;
+
             default:
                 return R.drawable.water_cup;
         }
@@ -79,6 +82,7 @@ public class Configs {
                 return R.drawable.water_thumb_03;
             case 4:
                 return R.drawable.water_thumb_04;
+
             case 5:
                 return R.drawable.water_thumb_05;
             case 6:
@@ -89,6 +93,7 @@ public class Configs {
                 return R.drawable.water_thumb_08;
             case 9:
                 return R.drawable.water_thumb_09;
+
             case 10:
                 return R.drawable.water_thumb_10;
             case 11:
@@ -99,6 +104,7 @@ public class Configs {
                 return R.drawable.water_thumb_13;
             case 14:
                 return R.drawable.water_thumb_14;
+
             default:
                 return R.drawable.water_cup;
         }
@@ -125,6 +131,7 @@ public class Configs {
                 return R.string.title_tip_04;
             case 4:
                 return R.string.title_tip_05;
+
             case 5:
                 return R.string.title_tip_06;
             case 6:
@@ -135,15 +142,16 @@ public class Configs {
                 return R.string.title_tip_09;
             case 9:
                 return R.string.title_tip_10;
+
             case 10:
                 return R.string.title_tip_11;
-            case 12:
+            case 11:
                 return R.string.title_tip_12;
-            case 13:
+            case 12:
                 return R.string.title_tip_13;
-            case 14:
+            case 13:
                 return R.string.title_tip_14;
-            case 15:
+            case 14:
                 return R.string.title_tip_15;
             default:
                 return R.string.title_tip_01;
@@ -167,6 +175,7 @@ public class Configs {
                 return R.string.text_tip_04;
             case 4:
                 return R.string.text_tip_05;
+
             case 5:
                 return R.string.text_tip_06;
             case 6:
@@ -177,16 +186,18 @@ public class Configs {
                 return R.string.text_tip_09;
             case 9:
                 return R.string.text_tip_10;
+
             case 10:
                 return R.string.text_tip_11;
-            case 12:
+            case 11:
                 return R.string.text_tip_12;
-            case 13:
+            case 12:
                 return R.string.text_tip_13;
-            case 14:
+            case 13:
                 return R.string.text_tip_14;
-            case 15:
+            case 14:
                 return R.string.text_tip_15;
+
             default:
                 return R.string.text_tip_01;
         }

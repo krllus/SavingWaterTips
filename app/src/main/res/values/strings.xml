@@ -11,6 +11,7 @@
     <string name="title_activity_main">Dicas</string>
     <string name="title_activity_details">Detalhes</string>
     <string name="title_activity_introduction">Motivação</string>
+    <string name="title_fragment_credit">Creditos</string>
 
     <string name="details_image_description">Imagem que mostra um copo de água</string>
 
@@ -23,8 +24,9 @@
     <string name="introduction_paragraph_04">Economizar água já é uma necessidade urgente em todo o mundo e, além de não ser tão difícil, pode aliviar as despesas no fim do mês. Duvida? Confira 15 dicas supersimples que selecionamos para você começar a poupar água em casa hoje mesmo.</string>
 
     <string name="fonts">Fontes:</string>
-    <string name="font_name">15 dicas práticas para economizar água</string>
-    <string name="font_author">Débora Spitzcovsky</string>
+    <string name="font_name">15 Dicas Práticas Para Economizar Água</string>
+    <string name="font_author">Por Débora Spitzcovsky</string>
+    <string name="font_available_link">Disponivel em: </string>
     <string name="font_link">http://planetasustentavel.abril.com.br/noticia/atitude/15-dicas-praticas-economizar-agua-desperdicio-777421.shtml?func=2</string>
     <string name="font_01">Manuais de Etiqueta do Planeta Sustentável</string>
     <string name="font_02">Organização das Nações Unidas</string>
@@ -32,7 +34,7 @@
     <string name="font_04">Sabesp</string>
 
     <string name="gridimage_transition">griditem_image</string>
-    <string name="action_share">Enviar para...</string>
+    <string name="action_share">Enviar para…</string>
 
 
 </resources>

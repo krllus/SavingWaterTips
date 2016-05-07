@@ -8,8 +8,13 @@
 
         <item
             android:id="@+id/drawer_main"
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@android:drawable/ic_menu_gallery"
             android:title="@string/title_activity_main" />
+
+        <item
+            android:id="@+id/drawer_credits"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="@string/title_fragment_credit" />
 
     </group>
 

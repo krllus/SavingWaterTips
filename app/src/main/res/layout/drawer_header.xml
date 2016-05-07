@@ -10,7 +10,8 @@
         android:id="@+id/drawer_header_user_cover"
         android:layout_width="match_parent"
         android:layout_height="192dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/water_cup" />
 
     <View
         android:layout_width="match_parent"
